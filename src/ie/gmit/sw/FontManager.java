@@ -21,7 +21,7 @@ public class FontManager
 	
 	public void setFontSize(int size)
 	{
-		fontSize = (int)(10 + size);
+		fontSize = (int)(12 + size);
 		if(fontSize > 40)
 			fontSize = 40;
 	}

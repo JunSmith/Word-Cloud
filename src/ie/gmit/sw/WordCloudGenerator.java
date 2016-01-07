@@ -25,6 +25,7 @@ public class WordCloudGenerator
 	private int imageH;	
 	private int stringW;
 	private int stringH;	
+	private int direction;
 	
 	public WordCloudGenerator(int width, int height)
 	{
@@ -48,7 +49,7 @@ public class WordCloudGenerator
 		graphics.setFont(font);
 		graphics.setColor(color);
 		
-		rect = getStringBounds(graphics, word, stringW, stringH); //This NEEDS to be here
+		rect = getStringBounds(graphics, word, stringW, stringH);
 		while(ovc.checkOverlap(rect))
 		{
 			move(direction, rect);
@@ -57,52 +58,40 @@ public class WordCloudGenerator
 		ovc.addRectangle(rect);
 
 		graphics.drawString(word, stringW, stringH);
-		
-//		if((stringW + graphics.getFontMetrics().stringWidth(word)) > imageW)
-//		{
-//			stringW = 0;
-//		}
-//		else
-//		{
-//			stringW += graphics.getFontMetrics().stringWidth(word);
-//		}
-//		
-//		if((stringH + graphics.getFontMetrics().getHeight()) > imageH)
-//		{
-//			stringH = 0;
-//		}
-//		else
-//		{
-//			stringH += graphics.getFontMetrics().getHeight();
-//		}
 	}
 	
 	private void move(int direction, Rectangle2D rect)
-	{
-		// Need to stop words hitting edges - use imageH and imageW.
-		
+	{		
 		switch(direction)
 		{
 			case 0:
-				if(!(stringH + rect.getHeight() > imageH))
-					stringH++;
+				if(!(rect.getY() < 0))
+					stringH--;				
+				else
+					resetPosition();
 				break;
 				
 			case 1:
-				if(!(stringW + rect.getWidth() > imageW))
-					stringW++;
+				if(!(rect.getX() + rect.getWidth() > imageW))		
+					stringW++;				
+				else
+					resetPosition();
 				break;
 				
 			case 2:
-				if(!(stringH - rect.getHeight() < 0))
-					stringH--;
+				if(!(rect.getY() + rect.getHeight() > imageH))		
+					stringH++;				
+				else
+					resetPosition();
 				break;
 				
 			case 3:
-				if(!(stringW - rect.getWidth() < 0))
-					stringW--;
-				break;			
-		}
+				if(!(rect.getX() < 0))				
+					stringW--;				
+				else
+					resetPosition();
+				break;	
+		}		
 	}
 	
 	private Rectangle getStringBounds(Graphics2D g, String word, int x, int y)
@@ -115,7 +104,7 @@ public class WordCloudGenerator
 	public void createCloud(HashMap<String, Integer> words) throws IOException
 	{		
 		int i = 0;
-		int direction = 0;
+		direction = 0;
 		
 		for(Map.Entry<String, Integer> word : words.entrySet())
 		{
@@ -123,17 +112,28 @@ public class WordCloudGenerator
 			fontManager.setFont();
 			drawWord(fontManager.getFont(), fontManager.getRandomColor(), word.getKey(), direction);
 			
-			if(direction == 3)
-				direction = 0;
-			else
-				direction++;
+			changeDirection();
 			
-			if(i > 50)
+			if(i > 80)
 				break;
 			i++;
-		}
-		
+		}		
 		finalizeDrawing();
+	}
+	
+	private void changeDirection()
+	{
+		if(direction > 2)
+			direction = 0;
+		else
+			direction++;
+	}
+	
+	private void resetPosition()
+	{
+		stringW = imageW/2;
+		stringH = imageH/2;
+		changeDirection();
 	}
 	
 	public void finalizeDrawing() throws IOException

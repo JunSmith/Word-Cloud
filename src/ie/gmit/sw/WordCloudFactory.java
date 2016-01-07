@@ -6,18 +6,23 @@ public class WordCloudFactory
 	private int height = 1000;
 	
 	public void makeCloud(String data, String stopWords, boolean isFile) throws Exception
-	{
-		
-		FileParser fp = new FileParser();
+	{		
+		StopWordsParser swp = new StopWordsParser();
 		WordCloudGenerator wcg = new WordCloudGenerator(width, height);		
 
-		fp.createStopList(stopWords);
+		swp.createFile(stopWords);
 		
 		if(isFile)
-			fp.parseFile(data); //To parse a file.
+		{
+			TextFileParser fp = new TextFileParser();
+			fp.createFile(data); //To parse a file.
+			wcg.createCloud(fp.getWordMap());
+		}
 		else
-			fp.parseURL(data); // To parse a URL string.
-		
-		wcg.createCloud(fp.getWordMap());
+		{
+			UrlParser fp = new UrlParser();
+			fp.createFile(data); // To parse a URL string.
+			wcg.createCloud(fp.getWordMap());
+		}
 	}
 }
