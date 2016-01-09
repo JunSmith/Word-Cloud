@@ -112,9 +112,10 @@ public class WordCloudGenerator
 			fontManager.setFont();
 			drawWord(fontManager.getFont(), fontManager.getRandomColor(), word.getKey(), direction);
 			
+			if(i % 2 == 0)
 			changeDirection();
 			
-			if(i > 80)
+			if(i > 90)
 				break;
 			i++;
 		}		
