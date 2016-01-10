@@ -22,5 +22,5 @@ e.g. using a url www.gmit.ie along with stopwords.txt, run the command by typing
   java -cp ./wordcloud.jar ie.gmit.runner.Runner "www.gmit.ie" "./stopwords.txt" false
   
 ## UML Class Diagram
-Same image can be found [here](https://github.com/JunSmith/Word-Cloud/blob/master/src/ie/gmit/uml/ClassDiagram.png)
+UML diagram was generated using the ObjectAid Eclipse plugin. Same image can be found [here](https://github.com/JunSmith/Word-Cloud/blob/master/src/ie/gmit/uml/ClassDiagram.png)
 ![alt text](https://raw.githubusercontent.com/JunSmith/Word-Cloud/master/src/ie/gmit/uml/ClassDiagram.png "UML diagram")
