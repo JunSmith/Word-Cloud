@@ -18,14 +18,21 @@ public class StopWordsParser implements ParsableList
 	public void createFile(String file) throws Exception
 	{
 		System.out.println("Creating stopWord list...");
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-		String line;
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file))))
+		{
+			String line;
+			
+			while((line = br.readLine()) != null)		
+				stopWords.add(line);		
+			
+			System.out.println("StopWord list created");
+		}
 		
-		while((line = br.readLine()) != null)		
-			stopWords.add(line);		
-		
-		System.out.println("StopWord list created");
-		br.close();
+		catch(Exception e)
+		{
+			System.out.println("Stopwords file not found. Make sure it is spelled "
+					+ "correctly and is in the same directory as the .jar");
+		}
 	}
 	
 	public List<String> getList()

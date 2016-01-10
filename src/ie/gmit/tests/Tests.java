@@ -9,6 +9,11 @@ public class Tests
 	private WordCloudFactory wcg;
 	
 	@Before
+	public void create()
+	{
+		wcg = new WordCloudFactory();
+	}
+	
 	@After
 	public void destroy()
 	{
@@ -18,7 +23,7 @@ public class Tests
 	@Test
 	public void validFile() throws Exception
 	{
-		wcg.makeCloud("res.txt", "stopwords.txt", true);
+		wcg.makeCloud("./res.txt", "./stopwords.txt", true);
 	}
 	
 	@Test
@@ -37,5 +42,11 @@ public class Tests
 	public void invalidUrl() throws Exception
 	{
 		wcg.makeCloud("http://w.hello.this.is.a.test.url.com/", "./stopwords.txt", false);
+	}
+	
+	@Test
+	public void validStopFile() throws Exception
+	{
+		wcg.makeCloud("./res.txt", "./sopwords.txt", true);
 	}
 }
