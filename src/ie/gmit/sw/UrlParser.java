@@ -5,9 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class UrlParser implements Parsable
+public class UrlParser implements ParsableHashMap
 {
-
 	private HashMap<String, Integer> wordMap;
 	
 	public UrlParser()
@@ -44,7 +43,7 @@ public class UrlParser implements Parsable
 		}
 	}
 
-	public HashMap<String, Integer> getWordMap()
+	public HashMap<String, Integer> getHashMap()
 	{
 		return wordMap;
 	}

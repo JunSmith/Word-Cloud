@@ -6,11 +6,11 @@ public class Runner
 {
 	public static void main(String[] args) throws Exception 
 	{
-		String stopWords = "stopwords.txt";
-		
 		WordCloudFactory factory = new WordCloudFactory();
-		factory.makeCloud(stopWords);
-	}
-	
-	
+		
+		if(args[2].equalsIgnoreCase("true"))
+			factory.makeCloud(args[0], args[1], true);
+		else
+			factory.makeCloud(args[0], args[1], false);
+	}	
 }

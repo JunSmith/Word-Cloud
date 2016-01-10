@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
-public class StopWordsParser implements Parsable
+public class StopWordsParser implements ParsableList
 {
 	private List<String> stopWords;	
 	

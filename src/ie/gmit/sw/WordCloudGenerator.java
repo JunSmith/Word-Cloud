@@ -15,7 +15,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public class WordCloudGenerator 
+public class WordCloudGenerator
 {	
 	private FontManager fontManager;
 	private OverlapChecker ovc;
@@ -115,7 +115,7 @@ public class WordCloudGenerator
 			if(i % 2 == 0)
 			changeDirection();
 			
-			if(i > 90)
+			if(i > 100)
 				break;
 			i++;
 		}		
@@ -138,9 +138,9 @@ public class WordCloudGenerator
 	}
 	
 	public void finalizeDrawing() throws IOException
-	{
+	{		
 		graphics.dispose();
 		ImageIO.write(image, "png", new File("cloud.png"));
 		System.out.println("Finished drawing cloud");
-	}	
+	}
 }
