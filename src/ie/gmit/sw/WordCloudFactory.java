@@ -6,7 +6,9 @@ public class WordCloudFactory
 	private int height = 1000;
 	
 	public void makeCloud(String input, String stopWords, boolean isFile) throws Exception
-	{		
+	{
+		// Decides to parse fed string input either as file or Url type.
+		
 		StopWordsParser swp = new StopWordsParser();
 		WordCloudGenerator wcg = new WordCloudGenerator(width, height);	
 		

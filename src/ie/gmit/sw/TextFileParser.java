@@ -20,6 +20,10 @@ public class TextFileParser implements ParsableHashMap
 	
 	public void createFile(String file) 
 	{
+		// Creates a map of words from text file.
+		// If the word exists in stopWords file, does not add it to word list.
+		// Else, adds the word to list.
+		
 		System.out.println("Creating map of words from file");
 		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file))))
 		{
@@ -57,6 +61,8 @@ public class TextFileParser implements ParsableHashMap
 	
 	private void fillMap(List<String> wordList)
 	{
+		// Reads list and adds each word as key, increments value if it already exists.
+		
 		for(String word : wordList)				
 			if(word.length() > 1)
 			{

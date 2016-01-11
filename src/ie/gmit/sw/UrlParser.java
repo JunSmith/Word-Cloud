@@ -16,6 +16,8 @@ public class UrlParser implements ParsableHashMap
 	
 	public void createFile(String file) 
 	{
+		// Splits string into string array, then adds all entries to list.
+		
 		System.out.println("Creating map of words from URL");
 		String[] words = file.split("\\W");
 		
@@ -27,6 +29,8 @@ public class UrlParser implements ParsableHashMap
 	}
 	private void fillMap(List<String> wordList) 
 	{
+		// Fills List of strings with previously generated string array
+		
 		for(String word : wordList)		
 		{
 			if(word.length() > 1)

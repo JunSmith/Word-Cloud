@@ -17,6 +17,8 @@ public class StopWordsParser implements ParsableList
 	
 	public void createFile(String file) throws Exception
 	{
+		// Reads and converts file of stopWords into list.
+		
 		System.out.println("Creating stopWord list...");
 		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file))))
 		{

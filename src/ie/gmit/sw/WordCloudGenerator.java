@@ -25,7 +25,7 @@ public class WordCloudGenerator
 	private int imageH;	
 	private int stringW;
 	private int stringH;	
-	private int direction;
+	private int direction; // Value ranges from 0 to 3, each being a cardinal direction (down, right, up, left)
 	
 	public WordCloudGenerator(int width, int height)
 	{
@@ -44,7 +44,13 @@ public class WordCloudGenerator
 	
 	public void drawWord(Font font, Color color, String word, int direction)
 	{
+		// Method executed on every String entry in created list of words to be inserted into image.
+		// the while loop will keep executing until the retyLimit counter runs out, where the string will not be drawn. 
+		// This is caused by the algorithm being unable to find a suitable position.
+		// If it is able to find a space, the rectangle used to try and find an empty space is saved in a list of taken rectangle areas.
+		
 		Rectangle2D rect;
+		int retryLimit = 200;
 		
 		graphics.setFont(font);
 		graphics.setColor(color);
@@ -52,16 +58,25 @@ public class WordCloudGenerator
 		rect = getStringBounds(graphics, word, stringW, stringH);
 		while(ovc.checkOverlap(rect))
 		{
+			retryLimit--;
 			move(direction, rect);
 			rect = getStringBounds(graphics, word, stringW, stringH);
+			if(retryLimit < 0)
+				break;
 		}
-		ovc.addRectangle(rect);
-
-		graphics.drawString(word, stringW, stringH);
+		
+		if(retryLimit > 0)
+		{
+			ovc.addRectangle(rect);	
+			graphics.drawString(word, stringW, stringH);
+		}
 	}
 	
 	private void move(int direction, Rectangle2D rect)
 	{		
+		// Method to move the rect by a single pixel, direction determined by current value of direction int.
+		// If the word would render outside of image bounds, resetPosition is executed.
+		
 		switch(direction)
 		{
 			case 0:
@@ -96,6 +111,8 @@ public class WordCloudGenerator
 	
 	private Rectangle getStringBounds(Graphics2D g, String word, int x, int y)
 	{
+		// Gets accurate area of rectangle.
+		
 		FontRenderContext frc = g.getFontRenderContext();
 		GlyphVector gv = g.getFont().createGlyphVector(frc, word);
 		return gv.getPixelBounds(null, x, y);
@@ -103,6 +120,9 @@ public class WordCloudGenerator
 	
 	public void createCloud(HashMap<String, Integer> words) throws IOException
 	{		
+		// De facto "main" method of this class. 
+		// Loops through map of words to try and place each in image.
+		
 		int i = 0;
 		direction = 0;
 		
@@ -114,16 +134,14 @@ public class WordCloudGenerator
 			
 			if(i % 2 == 0)
 			changeDirection();
-			
-			if(i > 100)
-				break;
-			i++;
 		}		
 		finalizeDrawing();
 	}
 	
 	private void changeDirection()
 	{
+		// Increments value of direction unless it's 3, where it's set to 0.
+		
 		if(direction > 2)
 			direction = 0;
 		else
@@ -132,6 +150,8 @@ public class WordCloudGenerator
 	
 	private void resetPosition()
 	{
+		// Resets position of rectangle to center of image to run through placement algorithm again.
+		
 		stringW = imageW/2;
 		stringH = imageH/2;
 		changeDirection();
@@ -139,6 +159,8 @@ public class WordCloudGenerator
 	
 	public void finalizeDrawing() throws IOException
 	{		
+		// Saves all drawn strings to image.
+		
 		graphics.dispose();
 		ImageIO.write(image, "png", new File("cloud.png"));
 		System.out.println("Finished drawing cloud");

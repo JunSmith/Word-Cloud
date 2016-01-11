@@ -42,7 +42,7 @@ public class FontManager
 	}
 	
 	private String randomFont()
-	{
+	{		
 		Random random = new Random();
 		
 		switch(random.nextInt(3))
